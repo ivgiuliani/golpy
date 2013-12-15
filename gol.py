@@ -57,7 +57,7 @@ class GameOfLife(object):
         """
         dd = defaultdict(int)
         for x, y in config:
-            for nx, ny in GameOfLife.__neighbours(x, y):
+            for nx, ny in generate_neighbours(x, y):
                 dd[(nx, ny)] += 1
 
         survivors = {key for key, val in dd.items() if val in (2, 3)} & config
@@ -65,14 +65,14 @@ class GameOfLife(object):
 
         return frozenset(survivors | back_from_dead)
 
-    @staticmethod
-    def __neighbours(x, y):
-        return {
-            # in clockwise sense
-            (x - 1, y + 1), (x, y + 1), (x + 1, y + 1),
-            (x - 1,     y),             (x + 1,     y),
-            (x - 1, y - 1), (x, y - 1), (x + 1, y - 1),
-        }
+
+def generate_neighbours(x, y):
+    return {
+        # in clockwise sense
+        (x - 1, y + 1), (x, y + 1), (x + 1, y + 1),
+        (x - 1,     y),             (x + 1,     y),
+        (x - 1, y - 1), (x, y - 1), (x + 1, y - 1),
+    }
 
 
 def animate(cfgs, grid_top_left, grid_bottom_right, delay=50):

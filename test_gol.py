@@ -1,4 +1,5 @@
 import unittest
+import itertools
 
 from golpy import patterns
 from golpy.gol import GameOfLife
@@ -53,6 +54,17 @@ class TestGameOfLife(unittest.TestCase):
 
         g.advance(100)
         self.assertEqual(111, g.iteration)
+
+    def test_iterable(self):
+        g = GameOfLife(patterns.BLOCK)
+        # check that the gol is an infinitely iterable object
+        # (however cut to 100 iterations because we don't have infinite time)
+        iterations = 0
+        for state in itertools.islice(g, 100):
+            iterations += 1
+            self.assertEqual(patterns.BLOCK, state)
+            self.assertEqual(iterations, g.iteration)
+        self.assertEqual(100, iterations)
 
 
 if __name__ == "__main__":

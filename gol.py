@@ -67,6 +67,32 @@ class GameOfLife(object):
         return frozenset(survivors | back_from_dead)
 
 
+def __tick_alternative(config):
+    """
+    Applies Game of Life's rules to obtain a new state from the given
+    input state.
+
+    This implementation differs from the original approach in that it uses
+    a counter rather than a defaultdict to group the same items together.
+    However it's slightly slower than the original approuch, but the cause
+    it's certainly worth investigating.
+
+    @param config: input configuration as a set of pairs (x, y)
+    @type config: frozenset
+    @return: output configuration of the next step as a set of pairs (x, y)
+    @rtype: frozenset
+    """
+
+    dd = Counter([
+        item for x, y in config for item in generate_neighbours(x, y)
+    ])
+
+    survivors = {key for key, val in dd.items() if val in (2, 3)} & config
+    back_from_dead = {key for key, val in dd.items() if val == 3} - config
+
+    return frozenset(survivors | back_from_dead)
+
+
 def generate_neighbours(x, y):
     return {
         # in clockwise sense

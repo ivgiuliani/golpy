@@ -25,6 +25,10 @@ class GameOfLife(object):
         return self
 
     def next(self):
+        # required for python2 backwards compatibility
+        return self.__next__()
+
+    def __next__(self):
         # yields an infinite generator
         return self.advance(1)
 

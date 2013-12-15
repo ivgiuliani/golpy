@@ -32,13 +32,15 @@ class TestGameOfLife(unittest.TestCase):
 
     def test_block(self):
         # a block is a still life
+        g = GameOfLife(patterns.BLOCK)
         for i in range(100):
-            self.assertEqual(patterns.BLOCK, GameOfLife(patterns.BLOCK).advance(i))
+            self.assertEqual(patterns.BLOCK, g.advance(i))
 
     def test_beehive(self):
         # a beehive is a still life
+        g = GameOfLife(patterns.BEEHIVE)
         for i in range(100):
-            self.assertEqual(patterns.BEEHIVE, GameOfLife(patterns.BEEHIVE).advance(i))
+            self.assertEqual(patterns.BEEHIVE, g.advance(i))
 
     def test_iteration_count(self):
         g = GameOfLife(set())

@@ -2,7 +2,7 @@ import unittest
 import itertools
 
 from golpy import patterns
-from golpy.gol import GameOfLife
+from golpy.gol import GameOfLife, tick_alternative, translate_cfg
 
 
 class TestGameOfLife(unittest.TestCase):
@@ -58,9 +58,10 @@ class TestGameOfLife(unittest.TestCase):
         self.assertEqual(111, g.iteration)
 
     def test_iterable(self):
+        """Check that the gol is an infinitely iterable object
+        (however cut to 100 iterations because we don't have infinite time)
+        """
         g = GameOfLife(patterns.BLOCK)
-        # check that the gol is an infinitely iterable object
-        # (however cut to 100 iterations because we don't have infinite time)
         iterations = 0
         for state in itertools.islice(g, 100):
             iterations += 1
@@ -68,6 +69,25 @@ class TestGameOfLife(unittest.TestCase):
             self.assertEqual(iterations, g.iteration)
         self.assertEqual(100, iterations)
 
+    def test_current(self):
+        g = GameOfLife(patterns.BLINKER_P1)
+        ptns = [patterns.BLINKER_P1, patterns.BLINKER_P2]
+        for i in range(100):
+            self.assertEqual(ptns[i % len(ptns)], g.current())
+            g.advance()
+
+    def test_alternative_tick(self):
+        """Test that we can switch to alternative tick functions"""
+        g = GameOfLife(patterns.BEEHIVE, tick_function=tick_alternative)
+        for i in range(10):
+            self.assertEqual(patterns.BEEHIVE, g.advance(i))
+
+    def test_translate_cfg(self):
+        self.assertEqual(set(), translate_cfg(set(), 0, 0))
+        self.assertEqual({(0, 0)}, translate_cfg({(0, 0)}, 0, 0))
+        self.assertEqual({(10, 20)}, translate_cfg({(0, 0)}, 10, 20))
+        self.assertEqual({(10, 20), (20, 40)}, translate_cfg({(0, 0), (10, 20)}, 10, 20))
+        self.assertEqual({(-10, -20)}, translate_cfg({(0, 0)}, -10, -20))
 
 if __name__ == "__main__":
     unittest.main()

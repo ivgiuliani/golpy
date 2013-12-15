@@ -81,7 +81,7 @@ class GameOfLife(object):
         return frozenset(survivors | back_from_dead)
 
 
-def __tick_alternative(config):
+def tick_alternative(config):
     """
     Applies Game of Life's rules to obtain a new state from the given
     input state.

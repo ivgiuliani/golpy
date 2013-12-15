@@ -1,5 +1,7 @@
 import time
 
+from golpy.gol import translate_cfg
+
 
 def curses_animator(gol, delay=50, alive_char="*"):
     """
@@ -10,6 +12,13 @@ def curses_animator(gol, delay=50, alive_char="*"):
     import curses
 
     wnd = curses.initscr()
+    wnd.nodelay(True)
+    curses.cbreak()
+    curses.noecho()
+    wnd.keypad(1)
+
+    translation_x, translation_y = 0, 0
+
     # drop 5 rows/cols of padding
     start_x, start_y = wnd.getyx()[1], wnd.getyx()[0]
     stop_x, stop_y = wnd.getmaxyx()[1] - 5, wnd.getmaxyx()[0] - 5
@@ -26,10 +35,23 @@ def curses_animator(gol, delay=50, alive_char="*"):
 
     try:
         for config in gol:
-            print_cfg(config)
+            print_cfg(translate_cfg(config, translation_x, translation_y))
             print_iteration(gol.iteration)
             wnd.refresh()
 
+            key = wnd.getch()
+            if key:
+                if key == curses.KEY_UP:
+                    translation_y -= 1
+                elif key == curses.KEY_DOWN:
+                    translation_y += 1
+                elif key == curses.KEY_LEFT:
+                    translation_x -= 1
+                elif key == curses.KEY_RIGHT:
+                    translation_x += 1
+
             time.sleep(delay / 100.0)
     except KeyboardInterrupt:
+        curses.nocbreak()
+        wnd.keypad(0)
         curses.endwin()

@@ -1,12 +1,19 @@
+import sys
 import time
 
 from golpy.gol import translate_cfg
 
 
-def curses_animator(gol, delay=50, alive_char="*", padding=5):
+def curses_animator(gol, delay=50, alive_char=None, padding=5):
     """
     Animate the given configurations on the screen.
     """
+    # grab the best block char we have available
+    alive_char = alive_char or (
+        (sys.platform in ("linux2", "win32") and chr(219)) or
+        "#"  # fallback to '#' (OS X doesn't have any of these)
+    )
+
     # import curses here to allow any other animator to work even if the curses
     # module is not installed
     import curses

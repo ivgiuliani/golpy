@@ -1,5 +1,3 @@
-import time
-
 from collections import defaultdict, Counter
 
 __all__ = ["GameOfLife", "generate_neighbours", "translate_cfg"]
@@ -104,30 +102,6 @@ def generate_neighbours(x, y):
     }
 
 
-def animate(cfgs, grid_top_left, grid_bottom_right, delay=50):
-    """
-    Animate the given configurations on the screen.
-    """
-    import curses
-    wnd = curses.initscr()
-
-    def print_cfg(cfg):
-        start_x, start_y = grid_top_left
-        stop_x, stop_y = grid_bottom_right
-        for y in range(start_y, stop_y + 1):
-            for x in range(start_x, stop_x + 1):
-                val = (x, y) in cfg and "#" or " "
-                wnd.addch(y, x, val)
-        wnd.refresh()
-
-    try:
-        for config in cfgs:
-            print_cfg(config)
-            time.sleep(delay / 100.0)
-    except KeyboardInterrupt:
-        curses.endwin()
-
-
 def translate_cfg(cfg, x, y):
     """
     Translates a given configuration expressed as a set of coordinates of the
@@ -136,31 +110,3 @@ def translate_cfg(cfg, x, y):
     @rtype: set
     """
     return {(c_x + x, c_y + y) for c_x, c_y in cfg}
-
-
-PATTERN_TOAD = {(3, 3), (4, 3), (5, 3), (2, 4), (3, 4), (4, 4)}
-PATTERN_PI_HEPTONIMO = {(2, 4), (3, 4), (3, 3), (4, 2), (5, 3), (5, 4), (6, 4)}
-PATTERN_LIGHTBULB = {
-    (3, 2), (4, 2), (6, 2), (3, 3), (5, 3), (6, 3),
-    (4, 5), (5, 5), (6, 5),
-    (3, 6), (7, 6),
-    (3, 7), (7, 7),
-    (4, 8), (6, 8),
-    (2, 9), (4, 9), (6, 9), (8, 9),
-    (2, 10), (3, 10), (7, 10), (8, 10)
-}
-PATTERN_KAREL_P15 = {
-    (4, 2), (9, 2),
-    (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3),
-    (4, 4), (9, 4),
-    (4, 8), (5, 8), (6, 8), (7, 8), (8, 8), (9, 8),
-    (3, 9), (10, 9),
-    (2, 10), (11, 10),
-    (4, 11), (5, 11), (6, 11), (7, 11), (8, 11), (9, 11),
-    (3, 12), (10, 12),
-}
-
-
-if __name__ == "__main__":
-    start = GameOfLife(translate_cfg(PATTERN_KAREL_P15, 40, 20))
-    animate(start, (0, 0), (80, 50), delay=10)

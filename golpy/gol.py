@@ -9,6 +9,13 @@ class GameOfLife(object):
     """
 
     def __init__(self, seed, tick_function=None):
+        """
+        Initializes the state of a Game of Life with a given seed.
+        @param seed: the start configuration of this particular instance of
+                     the Game of Life. This must be a list of pairs (x,y)
+                     specifying the coordinates of the alive cells in the board
+                     (the coordinate (0,0) is assumed to be the top-left corner).
+        """
         seed = frozenset(seed)
         self.__config = seed
         self.__iteration = 0
@@ -22,6 +29,13 @@ class GameOfLife(object):
         return self.advance(1)
 
     def advance(self, n=1):
+        """
+        Advances the game of life of the specified amount of steps.
+        @param n: number of steps to advance
+        @type n: int
+        @return: the game of life status after advancing for the specified
+                 step count
+        """
         if n < 0:
             raise ValueError("the number of steps can't be negative")
 

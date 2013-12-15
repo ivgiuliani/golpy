@@ -8,10 +8,11 @@ class GameOfLife(object):
     Conway's Game of Life
     """
 
-    def __init__(self, seed):
+    def __init__(self, seed, tick_function=None):
         seed = frozenset(seed)
         self.__config = seed
         self.__iteration = 0
+        self.__tick_function = tick_function or self.__tick
 
     def __iter__(self):
         return self
@@ -25,7 +26,7 @@ class GameOfLife(object):
             raise ValueError("the number of steps can't be negative")
 
         for i in range(n):
-            self.__config = self.__tick(self.__config)
+            self.__config = self.__tick_function(self.__config)
             self.__iteration += 1
         return self.__config
 

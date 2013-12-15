@@ -29,7 +29,7 @@ PATTERN_KAREL_P15 = {
 
 def main(args):
     start = gol.GameOfLife(gol.translate_cfg(PATTERN_KAREL_P15, 40, 20))
-    animator.curses_animator(start, (0, 0), (80, 50), delay=10)
+    animator.curses_animator(start, delay=10)
     return False
 
 

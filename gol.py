@@ -2,6 +2,8 @@ import time
 
 from collections import defaultdict, Counter
 
+__all__ = ["GameOfLife", "generate_neighbours", "translate_cfg"]
+
 
 class GameOfLife(object):
     """

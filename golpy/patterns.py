@@ -5,6 +5,8 @@ A collection of well known life patterns
 # still lifes
 BLOCK = {(2, 2), (3, 2), (2, 3), (3, 3)}
 BEEHIVE = {(3, 2), (4, 2), (2, 3), (5, 3), (3, 4), (4, 4)}
+LOAF = {(3, 2), (4, 2), (2, 3), (5, 3), (3, 4), (5, 4), (4, 5)}
+BOAT = {(2, 2), (3, 2), (2, 3), (4, 3), (3, 4)}
 
 # simple lifes
 BLINKER_P1 = {(2, 3), (3, 3), (4, 3)}

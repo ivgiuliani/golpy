@@ -49,9 +49,13 @@ def curses_animator(gol, delay=50, alive_char="*", padding=5):
                     translation_x -= 1
                 elif key == curses.KEY_RIGHT:
                     translation_x += 1
+                elif key in (ord('q'), ord('Q')):
+                    break
 
             time.sleep(delay / 100.0)
     except KeyboardInterrupt:
-        curses.nocbreak()
-        wnd.keypad(0)
-        curses.endwin()
+        pass
+
+    curses.nocbreak()
+    wnd.keypad(0)
+    curses.endwin()

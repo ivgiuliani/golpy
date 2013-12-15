@@ -1,7 +1,7 @@
 import time
 
 
-def curses_animator(gol, grid_top_left, grid_bottom_right, delay=50):
+def curses_animator(gol, grid_top_left, grid_bottom_right, delay=50, alive_char="*"):
     """
     Animate the given configurations on the screen.
     """
@@ -16,7 +16,7 @@ def curses_animator(gol, grid_top_left, grid_bottom_right, delay=50):
         stop_x, stop_y = grid_bottom_right
         for y in range(start_y, stop_y + 1):
             for x in range(start_x, stop_x + 1):
-                val = (x, y) in cfg and "#" or " "
+                val = (x, y) in cfg and alive_char or " "
                 wnd.addch(y, x, val)
         wnd.refresh()
 

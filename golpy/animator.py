@@ -3,7 +3,7 @@ import time
 from golpy.gol import translate_cfg
 
 
-def curses_animator(gol, delay=50, alive_char="*"):
+def curses_animator(gol, delay=50, alive_char="*", padding=5):
     """
     Animate the given configurations on the screen.
     """
@@ -21,7 +21,7 @@ def curses_animator(gol, delay=50, alive_char="*"):
 
     # drop 5 rows/cols of padding
     start_x, start_y = wnd.getyx()[1], wnd.getyx()[0]
-    stop_x, stop_y = wnd.getmaxyx()[1] - 5, wnd.getmaxyx()[0] - 5
+    stop_x, stop_y = wnd.getmaxyx()[1] - padding, wnd.getmaxyx()[0] - padding
 
     def print_cfg(cfg):
         for y in range(start_y, stop_y + 1):

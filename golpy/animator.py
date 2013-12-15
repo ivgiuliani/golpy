@@ -18,11 +18,18 @@ def curses_animator(gol, grid_top_left, grid_bottom_right, delay=50, alive_char=
             for x in range(start_x, stop_x + 1):
                 val = (x, y) in cfg and alive_char or " "
                 wnd.addch(y, x, val)
-        wnd.refresh()
+
+    def print_iteration(it):
+        max_w = grid_bottom_right[0]
+        iteration = str(it)
+        wnd.addstr(0, max_w - len(iteration), iteration)
 
     try:
         for config in gol:
             print_cfg(config)
+            print_iteration(gol.iteration)
+            wnd.refresh()
+
             time.sleep(delay / 100.0)
     except KeyboardInterrupt:
         curses.endwin()

@@ -1,5 +1,6 @@
 import unittest
 
+from golpy import patterns
 from golpy.gol import GameOfLife
 
 
@@ -21,25 +22,22 @@ class TestGameOfLife(unittest.TestCase):
         self.assertEqual(set(), GameOfLife({(1, 1), (1, 2)}).advance(1))
 
     def test_blinker(self):
-        self.assertEqual({(3, 2), (3, 3), (3, 4)},
-                         GameOfLife({(2, 3), (3, 3), (4, 3)}).advance(1))
+        self.assertEqual(patterns.BLINKER_P2,
+                         GameOfLife(patterns.BLINKER_P1).advance(1))
 
     def test_toad(self):
-        start = {(3, 3), (4, 3), (5, 3), (2, 4), (3, 4), (4, 4)}
-        stop = {(4, 2), (2, 3), (5, 3), (2, 4), (5, 4), (3, 5)}
-        self.assertEqual(start, GameOfLife(stop).advance(1))
+        self.assertEqual(patterns.TOAD_P2,
+                         GameOfLife(patterns.TOAD_P1).advance(1))
 
     def test_block(self):
         # a block is a still life
-        block = {(2, 2), (3, 2), (2, 3), (3, 3)}
         for i in range(100):
-            self.assertEqual(block, GameOfLife(block).advance(i))
+            self.assertEqual(patterns.BLOCK, GameOfLife(patterns.BLOCK).advance(i))
 
     def test_beehive(self):
         # a beehive is a still life
-        block = {(3, 2), (4, 2), (2, 3), (5, 3), (3, 4), (4, 4)}
         for i in range(100):
-            self.assertEqual(block, GameOfLife(block).advance(i))
+            self.assertEqual(patterns.BEEHIVE, GameOfLife(patterns.BEEHIVE).advance(i))
 
     def test_iteration_count(self):
         g = GameOfLife(set())

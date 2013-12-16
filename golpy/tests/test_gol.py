@@ -2,7 +2,7 @@ import unittest
 import itertools
 
 from golpy import patterns
-from golpy.gol import GameOfLife, tick_alternative, translate_cfg
+from golpy.gol import GameOfLife, life_alternative, translate_cfg
 
 
 class TestGameOfLife(unittest.TestCase):
@@ -78,7 +78,7 @@ class TestGameOfLife(unittest.TestCase):
 
     def test_alternative_tick(self):
         """Test that we can switch to alternative tick functions"""
-        g = GameOfLife(patterns.BEEHIVE, tick_function=tick_alternative)
+        g = GameOfLife(patterns.BEEHIVE, life_function=life_alternative)
         for i in range(10):
             self.assertEqual(patterns.BEEHIVE, g.advance(i))
 

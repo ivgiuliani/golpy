@@ -8,7 +8,7 @@ class GameOfLife(object):
     Conway's Game of Life
     """
 
-    def __init__(self, seed, tick_function=None):
+    def __init__(self, seed, life_function=None):
         """
         Initializes the state of a Game of Life with a given seed.
         @param seed: the start configuration of this particular instance of
@@ -18,9 +18,9 @@ class GameOfLife(object):
                      corner).
         """
         seed = frozenset(seed)
-        self.__config = seed
+        self.__state = seed
         self.__iteration = 0
-        self.__tick_function = tick_function or self.__tick
+        self.__life_function = life_function or self.__life
 
     def __iter__(self):
         return self
@@ -45,9 +45,9 @@ class GameOfLife(object):
             raise ValueError("the number of steps can't be negative")
 
         for i in range(n):
-            self.__config = self.__tick_function(self.__config)
+            self.__state = self.__life_function(self.__state)
             self.__iteration += 1
-        return self.__config
+        return self.__state
 
     @property
     def iteration(self):
@@ -62,10 +62,10 @@ class GameOfLife(object):
         @return: a copy of the current state
         @rtype: set
         """
-        return frozenset(self.__config)
+        return frozenset(self.__state)
 
     @staticmethod
-    def __tick(config):
+    def __life(config):
         """
         Applies Game of Life's rules to obtain a new state from the given
         input state.
@@ -86,7 +86,7 @@ class GameOfLife(object):
         return frozenset((survivors & config) | (back_from_dead - config))
 
 
-def tick_alternative(config):
+def life_alternative(config):
     """
     Applies Game of Life's rules to obtain a new state from the given
     input state.

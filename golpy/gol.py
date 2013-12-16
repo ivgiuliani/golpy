@@ -92,7 +92,7 @@ def tick_alternative(config):
 
     This implementation differs from the original approach in that it uses
     a counter rather than a defaultdict to group the same items together.
-    However it's slightly slower than the original approuch, but the cause
+    However it's slightly slower than the original approach, but the cause
     it's certainly worth investigating.
 
     @param config: input configuration as a set of pairs (x, y)

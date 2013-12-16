@@ -79,10 +79,10 @@ class GameOfLife(object):
             for nx, ny in generate_neighbours(x, y):
                 dd[(nx, ny)] += 1
 
-        survivors = {key for key, val in dd.items() if val in (2, 3)} & config
-        back_from_dead = {key for key, val in dd.items() if val == 3} - config
+        survivors = {key for key, val in dd.items() if val in (2, 3)}
+        back_from_dead = {key for key, val in dd.items() if val == 3}
 
-        return frozenset(survivors | back_from_dead)
+        return frozenset((survivors & config) | (back_from_dead - config))
 
 
 def tick_alternative(config):

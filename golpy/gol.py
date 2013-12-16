@@ -112,12 +112,12 @@ def tick_alternative(config):
 
 
 def generate_neighbours(x, y):
-    return {
+    return (
         # in clockwise sense
         (x - 1, y + 1), (x, y + 1), (x + 1, y + 1),
         (x - 1,     y),             (x + 1,     y),
         (x - 1, y - 1), (x, y - 1), (x + 1, y - 1),
-    }
+    )
 
 
 def translate_cfg(cfg, x, y):

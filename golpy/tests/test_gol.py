@@ -86,7 +86,8 @@ class TestGameOfLife(unittest.TestCase):
         self.assertEqual(set(), translate_cfg(set(), 0, 0))
         self.assertEqual({(0, 0)}, translate_cfg({(0, 0)}, 0, 0))
         self.assertEqual({(10, 20)}, translate_cfg({(0, 0)}, 10, 20))
-        self.assertEqual({(10, 20), (20, 40)}, translate_cfg({(0, 0), (10, 20)}, 10, 20))
+        self.assertEqual({(10, 20), (20, 40)},
+                         translate_cfg({(0, 0), (10, 20)}, 10, 20))
         self.assertEqual({(-10, -20)}, translate_cfg({(0, 0)}, -10, -20))
 
 if __name__ == "__main__":

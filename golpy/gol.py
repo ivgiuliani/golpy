@@ -14,7 +14,8 @@ class GameOfLife(object):
         @param seed: the start configuration of this particular instance of
                      the Game of Life. This must be a list of pairs (x,y)
                      specifying the coordinates of the alive cells in the board
-                     (the coordinate (0,0) is assumed to be the top-left corner).
+                     (the coordinate (0,0) is assumed to be the top-left
+                     corner).
         """
         seed = frozenset(seed)
         self.__config = seed

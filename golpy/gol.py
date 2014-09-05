@@ -123,8 +123,9 @@ def generate_neighbours(x, y):
 
 def translate_cfg(cfg, x, y):
     """
-    Translates a given configuration expressed as a set of coordinates of the
+    Translates a given configuration expressed as a set of coordinates by the
     specified amount in the x and y axis.
+
     @returns: the translated configuration
     @rtype: set
     """
